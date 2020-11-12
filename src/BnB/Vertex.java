@@ -5,11 +5,15 @@ import java.util.List;
 
 public class Vertex {
     private final long id;
-    private final List<Vertex> vertexIds;
+    private final List<Vertex> vertices;
 
     Vertex(long id) {
         this.id = id;
-        this.vertexIds = new LinkedList<>();
+        this.vertices = new LinkedList<>();
+    }
+
+    public List<Vertex> getFollowVertices(){
+        return vertices;
     }
 
     public long getId(){
@@ -17,7 +21,7 @@ public class Vertex {
     }
 
     public boolean addFollowVertex(Vertex vertex){
-        return this.vertexIds.add(vertex);
+        return this.vertices.add(vertex);
     }
 
     @Override

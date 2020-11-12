@@ -5,9 +5,11 @@ import java.util.*;
 
 public class Graph {
     private final HashMap<Long, Vertex> vertices;
+    private int delta; //max edge num from one vertex
 
-    private Graph(long initialCapacity) {
-        vertices = new HashMap<>((int)initialCapacity);
+    private Graph(long verticesNum) {
+        vertices = new HashMap<>((int)verticesNum);
+        delta = 0;
     }
 
     public boolean addVertex(Vertex vertex){
@@ -20,18 +22,79 @@ public class Graph {
         }
     }
 
-    public Vertex getVertex(long id){
-        return vertices.getOrDefault(id, null);
+    public int getVerticesNum(){
+        return vertices.size();
     }
 
-    public boolean addFollowVertex(Vertex vertex, Vertex followVertex){
-        return vertex.addFollowVertex(followVertex);
+    public int getDelta(){
+        return delta;
+    }
+
+    public boolean isRemovableVertex(Vertex vertex){
+        List<Vertex> vertices = vertex.getFollowVertices();
+        //看它所有followVertex还在不在vertices中 如果都在则可，有一个不在就不可
+        for (Vertex v : vertices){
+            if (!this.vertices.containsKey(v.getId())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean hasRemovableVertex(){
+        for (Vertex v : this.vertices.values()){
+            if (this.isRemovableVertex(v)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Vertex> getRemovableVertices(){
+        List<Vertex> vertices = new ArrayList<>();
+        for (Vertex v : this.vertices.values()){
+            if (this.isRemovableVertex(v)){
+                vertices.add(v);
+            }
+        }
+        return vertices;
+    }
+
+    public Graph removeVertex(Vertex vertex){
+        if (vertex == null){
+            return this;
+        }
+        Graph graph = this.deepClone();
+        graph.vertices.remove(vertex.getId());
+        return graph;
+    }
+
+    public Vertex getVertex(long id){
+        return vertices.getOrDefault(id, null);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println(System.getProperty("user.dir"));
         Graph graph = Graph.read("src\\BnB\\delaunay_n10.graph");
     }
+
+//    public static String genKey(Vertex u, Vertex v){
+//        Vertex smaller;
+//        Vertex larger;
+//        if (u.getId() < v.getId()){
+//            smaller = u;
+//            larger = v;
+//        }
+//        else {
+//            smaller = v;
+//            larger = u;
+//        }
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(smaller.getId());
+//        sb.append("_");
+//        sb.append(larger.getId());
+//        return sb.toString();
+//    }
 
     public static Graph read(String path) throws FileNotFoundException {
         File file = new File(path);
@@ -54,6 +117,7 @@ public class Graph {
                 }
 
                 Scanner s = new Scanner(line);
+                int edgeNum = 0;
                 while (s.hasNext()) {
                     //add the follow vertices for current vertex
                     long followVertexId = s.nextLong();
@@ -64,7 +128,9 @@ public class Graph {
                     }
 
                     newVertex.addFollowVertex(followVertex);
+                    edgeNum++;
                 }
+                graph.delta = Math.max(graph.delta, edgeNum);
             }
 
             return graph;
