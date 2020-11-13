@@ -1,6 +1,6 @@
-package algo;
+package vc.algo;
 
-import base.Vertex;
+import vc.base.Vertex;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;

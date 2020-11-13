@@ -1,4 +1,4 @@
-package base;
+package vc.base;
 
 import java.io.*;
 import java.util.*;
@@ -41,7 +41,6 @@ public class Graph {
 
     public boolean isRemovableVertex(Vertex vertex){
         List<Vertex> vertices = vertex.getFollowVertices();
-        //看它所有followVertex还在不在vertices中 如果都在则可，有一个不在就不可
         for (Vertex v : vertices){
             if (!this.vertices.containsKey(v.getId())){
                 return false;

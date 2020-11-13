@@ -1,4 +1,4 @@
-package algo;
+package vc.algo;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -85,11 +85,3 @@ class SA {
 
 }
 
-interface SAInstance {
-    float getCost();
-    void init(Random rd);
-    void genNeighbor(Random rd);
-    float getNeighborCost();
-    float getProbFactor();
-    void update();
-}

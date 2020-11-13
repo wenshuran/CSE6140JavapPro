@@ -1,4 +1,4 @@
-package base;
+package vc.base;
 
 import java.util.LinkedList;
 import java.util.List;

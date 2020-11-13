@@ -1,9 +1,11 @@
-import algo.SAVC;
+package vc;
+
+import vc.algo.SAVC;
 
 import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
-public class main {
+public class Main {
 
     public static void main(String []args) throws FileNotFoundException {
         Logger.getGlobal().info("Start Minimum Vertex Cover Test ...");

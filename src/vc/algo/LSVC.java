@@ -1,7 +1,7 @@
-package algo;
+package vc.algo;
 
-import base.Graph;
-import base.Vertex;
+import vc.base.Graph;
+import vc.base.Vertex;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -83,11 +83,11 @@ class LSVC {
 
         ArrayList<Long> vertexPool = new ArrayList<>(graph.getVertexIds());
 
-        class MyVertexIdxComparator implements Comparator{
+        class MyVertexIdxComparator implements Comparator<Long>{
 
-            public int compare(Object o1, Object o2) {
-                int i1 = graph.getVertex((Long)o1).getFollowVertices().size();
-                int i2 = graph.getVertex((Long)o2).getFollowVertices().size();
+            public int compare(Long o1, Long o2) {
+                int i1 = graph.getVertex(o1).getFollowVertices().size();
+                int i2 = graph.getVertex(o2).getFollowVertices().size();
                 if (i1 < i2){
                     return -1;
                 }
