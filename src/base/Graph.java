@@ -1,18 +1,29 @@
+package base;
+
 import java.io.*;
 import java.util.*;
 
 public class Graph {
     private final HashMap<Long, Vertex> vertices;
+    private final ArrayList<Long> vertexIds;
     private int delta; //max edge num from one vertex
+    private int numEdges;
 
-    protected Graph(long verticesNum) {
+    private Graph(long verticesNum) {
         vertices = new HashMap<>((int)verticesNum);
+        vertexIds = new ArrayList<>((int)verticesNum);
         delta = 0;
+        numEdges = 0;
+    }
+
+    public int getNumEdges() {
+        return numEdges;
     }
 
     public boolean addVertex(Vertex vertex){
         if (!vertices.containsKey(vertex.getId())){
             vertices.put(vertex.getId(), vertex);
+            vertexIds.add(vertex.getId());
             return true;
         }
         else {
@@ -58,14 +69,18 @@ public class Graph {
         return vertices;
     }
 
-//    public Graph removeVertex(Vertex vertex){
+//    public base.Graph removeVertex(base.Vertex vertex){
 //        if (vertex == null){
 //            return this;
 //        }
-//        Graph graph = this.deepClone();
+//        base.Graph graph = this.deepClone();
 //        graph.vertices.remove(vertex.getId());
 //        return graph;
 //    }
+
+    public ArrayList<Long> getVertexIds(){
+        return vertexIds;
+    }
 
     public Vertex getVertex(long id){
         return vertices.getOrDefault(id, null);
@@ -77,9 +92,9 @@ public class Graph {
         System.out.println(graph.vertices.size());
     }
 
-//    public static String genKey(Vertex u, Vertex v){
-//        Vertex smaller;
-//        Vertex larger;
+//    public static String genKey(base.Vertex u, base.Vertex v){
+//        base.Vertex smaller;
+//        base.Vertex larger;
 //        if (u.getId() < v.getId()){
 //            smaller = u;
 //            larger = v;
@@ -130,8 +145,9 @@ public class Graph {
                     edgeNum++;
                 }
                 graph.delta = Math.max(graph.delta, edgeNum);
+                graph.numEdges += edgeNum;
             }
-
+            graph.numEdges /= 2;
             return graph;
         } catch (Exception e) {
             System.out.println(e.toString());
