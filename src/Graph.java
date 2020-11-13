@@ -1,5 +1,3 @@
-package BnB;
-
 import java.io.*;
 import java.util.*;
 
@@ -7,7 +5,7 @@ public class Graph {
     private final HashMap<Long, Vertex> vertices;
     private int delta; //max edge num from one vertex
 
-    private Graph(long verticesNum) {
+    protected Graph(long verticesNum) {
         vertices = new HashMap<>((int)verticesNum);
         delta = 0;
     }
@@ -60,22 +58,23 @@ public class Graph {
         return vertices;
     }
 
-    public Graph removeVertex(Vertex vertex){
-        if (vertex == null){
-            return this;
-        }
-        Graph graph = this.deepClone();
-        graph.vertices.remove(vertex.getId());
-        return graph;
-    }
+//    public Graph removeVertex(Vertex vertex){
+//        if (vertex == null){
+//            return this;
+//        }
+//        Graph graph = this.deepClone();
+//        graph.vertices.remove(vertex.getId());
+//        return graph;
+//    }
 
     public Vertex getVertex(long id){
         return vertices.getOrDefault(id, null);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void testGraph(String[] args) throws FileNotFoundException {
         System.out.println(System.getProperty("user.dir"));
-        Graph graph = Graph.read("src\\BnB\\delaunay_n10.graph");
+        Graph graph = Graph.read("data\\delaunay_n10.graph");
+        System.out.println(graph.vertices.size());
     }
 
 //    public static String genKey(Vertex u, Vertex v){
