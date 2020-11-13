@@ -1,1 +1,3 @@
-/out/*
+/out
+/.idea
+/CSE6140JavapPro.iml

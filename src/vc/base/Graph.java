@@ -68,11 +68,11 @@ public class Graph {
         return vertices;
     }
 
-//    public base.Graph removeVertex(base.Vertex vertex){
+//    public vc.base.Graph removeVertex(vc.base.Vertex vertex){
 //        if (vertex == null){
 //            return this;
 //        }
-//        base.Graph graph = this.deepClone();
+//        vc.base.Graph graph = this.deepClone();
 //        graph.vertices.remove(vertex.getId());
 //        return graph;
 //    }
@@ -91,9 +91,9 @@ public class Graph {
         System.out.println(graph.vertices.size());
     }
 
-//    public static String genKey(base.Vertex u, base.Vertex v){
-//        base.Vertex smaller;
-//        base.Vertex larger;
+//    public static String genKey(vc.base.Vertex u, vc.base.Vertex v){
+//        vc.base.Vertex smaller;
+//        vc.base.Vertex larger;
 //        if (u.getId() < v.getId()){
 //            smaller = u;
 //            larger = v;
