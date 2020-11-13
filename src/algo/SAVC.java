@@ -113,6 +113,7 @@ public class SAVC extends LSVC implements SAInstance{
         return getSize();
     }
 
+    // TODO: Implement objectives
     public float costPro(boolean isNeighbor) {
         // The complete objective F = A \sum_i vi  + B \sum_i \sum_j dij + B \sum_i \sum_j dij(vi*vj-vi-vj)
         //                          = A coverSize  + B edgeSize          + B
