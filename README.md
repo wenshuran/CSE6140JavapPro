@@ -6,5 +6,5 @@ Java implementation of Gatech CSE6140 group project.
 ```bash
 cd src
 
-javac javac ./vc/*.java -d OUTPUT_DIR
+javac ./vc/*.java -d OUTPUT_DIR
 ```
