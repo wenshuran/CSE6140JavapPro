@@ -124,14 +124,6 @@ public class Graph {
             Graph graph = new Graph(numVertices);
             for (long vertex = 1; vertex <= numVertices; vertex++) {
                 line = input.readLine();
-                /**
-                 * TODO
-                 * Why this is not a bi-directional graph?
-                 * newVertex -> followVertex
-                 * in the meantime
-                 * followVertex -> newVertex
-                 * -Chujie
-                 */
                 Vertex newVertex = graph.getVertex(vertex);
                 if (newVertex == null) {
                     newVertex = new Vertex(vertex);
