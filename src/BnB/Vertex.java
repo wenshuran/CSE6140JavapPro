@@ -1,21 +1,28 @@
 package BnB;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Vertex {
     private final long id;
-    private final List<Vertex> vertices;
+//    private final List<Vertex> vertices;
+    private final Set<Vertex> vertices;
 
     Vertex(long id) {
         this.id = id;
-        this.vertices = new LinkedList<>();
+//        this.vertices = new LinkedList<>();
+        this.vertices = new HashSet<>();
     }
 
-    public List<Vertex> getFollowVertices(){
-        return vertices;
+//    public List<Vertex> getFollowVertices(){
+//        return vertices;
+//    }
+    /**
+     * @author chujiechen
+     * @return vertices: neighbors
+     */
+    public Set<Vertex> getFollowVertices(){
+    	return vertices;
     }
-
     public long getId(){
         return this.id;
     }
