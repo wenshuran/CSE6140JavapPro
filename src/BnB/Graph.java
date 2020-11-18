@@ -65,7 +65,11 @@ public class Graph {
         }
         return vertices;
     }
-
+    /**
+     * TODO
+     * followVertex won't get removed
+     * - Chujie
+     */
     public Graph removeVertex(Vertex vertex){
         if (vertex == null){
             return this;
@@ -85,7 +89,8 @@ public class Graph {
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println(System.getProperty("user.dir"));
 //        Graph graph = Graph.read("src\\BnB\\delaunay_n10.graph");
-        Graph graph = Graph.read("src/BnB/delaunay_n10.graph");
+//        Graph graph = Graph.read("src/BnB/delaunay_n10.graph");
+        Graph graph = Graph.read("src/BnB/karate.graph");
     }
 
 //    public static String genKey(Vertex u, Vertex v){
@@ -164,14 +169,8 @@ public class Graph {
     public Graph deepClone() {
     	int numVertices = this.getVerticesNum();
     	Graph graphDC = new Graph(numVertices);
-    	/**
-    	 * TODO 
-    	 * Do we start from 0 or 1?
-    	 * Shall we have a getVertices()?
-    	 * -Chujie
-    	 */
-    	for(long i = 0; i <= numVertices; ++i) {
-    		Vertex thisU = this.getVertex(i);
+    	for(long i: this.vertices.keySet()) {
+    		Vertex thisU = this.vertices.get(i);
     		if(thisU != null) {
     			Vertex thatU = new Vertex(i);
     			for(Vertex thisV: thisU.getFollowVertices()) {
@@ -192,23 +191,17 @@ public class Graph {
      */
 	public Graph unionGraph(Graph Cj) {
 		Set<Integer> idSet = new HashSet<>();
-    	/**
-    	 * TODO 
-    	 * Do we start from 0 or 1?
-    	 * Shall we have a getVertices()?
-    	 * -Chujie
-    	 */
-		for(int i = 0; i <= this.getVerticesNum(); ++i) {
-			if(this.getVertex(i) != null) idSet.add(i);
+		for(long i: this.vertices.keySet()) {
+			if(this.vertices.get(i) != null) idSet.add((int) i);
 		}
-		for(int i = 0; i <= Cj.getVerticesNum(); ++i) {
-			if(Cj.getVertex(i) != null) idSet.add(i);
+		for(long i: Cj.vertices.keySet()) {
+			if(Cj.getVertex(i) != null) idSet.add((int) i);
 		}
 		// get union number of vertices
 		int totNumVertex = idSet.size();
 		Graph Cij = new Graph(totNumVertex);
-		
-		for(long i = 0; i <= this.getVerticesNum(); ++i) {
+		// copy graph from Ci
+		for(long i: this.vertices.keySet()) {
     		Vertex thisU = this.getVertex(i);
     		if(thisU != null) {
     			Vertex thatU = new Vertex(i);
@@ -219,12 +212,11 @@ public class Graph {
     			Cij.addVertex(thatU);
     		}
     	}
-		for(long i = 0; i <= Cj.getVerticesNum(); ++i) {
+		for(long i: Cj.vertices.keySet()) {
     		Vertex U = Cj.getVertex(i);
     		if(U != null) {
-    			// if U is also in Ci
-    			// we only need to check if we have 
 				Vertex newU = Cij.getVertex(U.getId());
+    			// if newU is not in Cij
     			if(newU == null) {
     				newU = new Vertex(U.getId());
     				for(Vertex V: U.getFollowVertices()) {
@@ -233,6 +225,7 @@ public class Graph {
     				}
     				Cij.addVertex(newU);
     			} else {
+        			// else newU is already in Cij
     				for(Vertex V: U.getFollowVertices()) {
     					Vertex newV = new Vertex(V.getId());
     					newU.addFollowVertex(newV);
@@ -247,15 +240,17 @@ public class Graph {
 	 * Find v \in C such that v has exactly one neighbor w not \in C
 	 * @return array consisting of v and w;
 	 */
-	public Vertex[] findVW() {
+	public Vertex[] findVW(Graph G) {
 		// TODO Auto-generated method stub
-		for(int i = 0; i <= this.getVerticesNum(); ++i) {
-			Vertex v = this.getVertex(i);
+		for(long i :this.vertices.keySet()) {
+			// the full list of neighbors is from graph G
+			Vertex v = G.getVertex(i);
 			if(v == null) continue;
-			Set<Vertex> neighbors = v.getFollowVertices();
+			Set<Vertex> neighbors = G.getVertex(i).getFollowVertices();
 			int numOfNotInC = 0;
 			Vertex w = null;
 			for(Vertex x: neighbors) {
+				// if the neighbor is not in C
 				if(this.getVertex(x.getId()) == null) {
 					w = x;
 					numOfNotInC++;
