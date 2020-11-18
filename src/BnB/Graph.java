@@ -11,7 +11,7 @@ public class Graph {
         vertices = new HashMap<>();
         delta = 0;
     }
-    
+
     private Graph(long verticesNum) {
         vertices = new HashMap<>((int)verticesNum);
         delta = 0;
@@ -85,13 +85,13 @@ public class Graph {
     }
 
 
-	
-    public static void main(String[] args) throws FileNotFoundException {
-        System.out.println(System.getProperty("user.dir"));
-//        Graph graph = Graph.read("src\\BnB\\delaunay_n10.graph");
-//        Graph graph = Graph.read("src/BnB/delaunay_n10.graph");
-        Graph graph = Graph.read("src/BnB/karate.graph");
-    }
+
+//    public static void main(String[] args) throws FileNotFoundException {
+//        System.out.println(System.getProperty("user.dir"));
+////        Graph graph = Graph.read("src\\BnB\\delaunay_n10.graph");
+////        Graph graph = Graph.read("src/BnB/delaunay_n10.graph");
+//        Graph graph = Graph.read("src/BnB/karate.graph");
+//    }
 
 //    public static String genKey(Vertex u, Vertex v){
 //        Vertex smaller;
@@ -153,7 +153,7 @@ public class Graph {
             return null;
         }
     }
-    
+
     /**
      * @author chujiechen
      * @return graphDC: a deepCloned new graph
@@ -176,7 +176,7 @@ public class Graph {
 //    	System.out.println("Done deepClone.");
 		return graphDC;
 	}
-    
+
     /**
      * @author chujiechen
      * @param Cj: Vertex cover C_j
@@ -229,7 +229,7 @@ public class Graph {
     	}
 		return Cij;
 	}
-    
+
 	/**
 	 * Find v \in C such that v has exactly one neighbor w not \in C
 	 * @return array consisting of v and w;

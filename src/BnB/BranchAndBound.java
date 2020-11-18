@@ -10,10 +10,10 @@ public class BranchAndBound {
         while(C.hasRemovableVertex()){
 //        	System.out.println("having removable vertices...");
             int rmax = 0;
-            Vertex vMax = null;
+                Vertex vMax = null;
             for(Vertex v : C.getRemovableVertices()){
                 int r = C.removeVertex(v).getRemovableVertices().size();
-                if (r > rmax){
+                if (r >= rmax){
                     vMax = v;
                     rmax = r;
                 }
@@ -32,7 +32,7 @@ public class BranchAndBound {
             Vertex[] vw = C.findVW(G);
             Vertex v = vw[0];
             Vertex w = vw[1];
-            
+
             if (v != null){
                 C.addVertex(w);
                 C = Proc_A(G, C.removeVertex(v));
@@ -54,14 +54,21 @@ public class BranchAndBound {
             CList.add(C);
         }
         System.out.println("Part II");
+        List<List<List<Graph>>> graphArchive = new ArrayList<>();
         for (int i = 1; i <=n; i++){
+            List<List<Graph>> jGraph = new ArrayList<>();
             for (int j = i+1; j <= n; j++){
-                Graph C = Proc_A(G, CList.get(i).unionGraph(CList.get(j)));
+                Graph C = Proc_A(G, CList.get(i-1).unionGraph(CList.get(j-1)));
+                ArrayList<Graph> rGraph = new ArrayList<>();
                 for (int r = 1; r <= n-k; r++){
                     C = Proc_B(G, C, r);
+                    rGraph.add(C);
                 }
+                jGraph.add(rGraph);
             }
+            graphArchive.add(jGraph);
         }
+        return;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
