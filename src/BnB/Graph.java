@@ -159,6 +159,7 @@ public class Graph {
      * @return graphDC: a deepCloned new graph
      */
     public Graph deepClone() {
+//        System.out.println("Start deepCloning...");
     	int numVertices = this.getVerticesNum();
     	Graph graphDC = new Graph(numVertices);
     	for(long i: this.vertices.keySet()) {
@@ -172,6 +173,7 @@ public class Graph {
     			graphDC.addVertex(thatU);
     		}
     	}
+//    	System.out.println("Done deepClone.");
 		return graphDC;
 	}
     
