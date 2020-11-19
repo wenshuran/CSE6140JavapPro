@@ -49,9 +49,12 @@ public class SAVC extends LSVC implements SAInstance{
     }
 
     @Override
-    public void init(Random rd) {
-        initVCFast(rd);
+    public boolean init(Random rd) {
+//        return  initVC(rd);
+//        return  initVCFast(rd);
+        return initVCGreedy(rd);
     }
+
 
     @Override
     public void genNeighbor(Random rd) {
@@ -63,7 +66,7 @@ public class SAVC extends LSVC implements SAInstance{
         }
 
         flippedVertexId = vertexIds.get(rd.nextInt(vertexIds.size()));
-        neighborSize = getSize();
+        neighborSize = getSize(false);
         flippingFactor = graph.getVertex(flippedVertexId).getFollowVertices().size() * 1.0f / graph.getNumEdges();
         if(vc.get(flippedVertexId) == 1){
             boolean isStillVC = true;
@@ -75,13 +78,13 @@ public class SAVC extends LSVC implements SAInstance{
                 }
             }
             if(isStillVC){
+                neighborSize = size - 1;
                 neighbor.put(flippedVertexId, 0);
-                neighborSize = getSize() - 1;
             }
             flippingFactor = 1.f + flippingFactor;
         } else {
+            neighborSize = size + 1;
             neighbor.put(flippedVertexId, 1);
-            neighborSize = getSize() + 1;
             flippingFactor = 1.f - flippingFactor;
         }
 
@@ -110,20 +113,14 @@ public class SAVC extends LSVC implements SAInstance{
         // The simple objective F = \sum_i vi = coverSize
         if(isNeighbor)
             return neighborSize;
-        return getSize();
+        return size;
     }
 
     // TODO: Implement objectives
     public float costPro(boolean isNeighbor) {
-        // The complete objective F = A \sum_i vi  + B \sum_i \sum_j dij + B \sum_i \sum_j dij(vi*vj-vi-vj)
-        //                          = A coverSize  + B edgeSize          + B
-        int coverSize = getSize();
         if(isNeighbor)
-            coverSize =  neighborSize;
-
-        int edgeSize = graph.getNumEdges();
-
-        return A*coverSize + B * edgeSize;
+            return neighborSize;
+        return size;
     }
 
     public void run(float cutoff, int seed) {
@@ -137,7 +134,7 @@ public class SAVC extends LSVC implements SAInstance{
 
     public void printResult(){
 //        System.out.println("SA algorithms for Minimum Vertex Cover not implemented yet!");
-        System.out.println("SA algorithms Results: " + getSize());
+        System.out.println("SA algorithms Results: " + getSize(true));
     }
 
 

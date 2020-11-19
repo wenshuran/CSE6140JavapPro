@@ -5,7 +5,7 @@ import java.util.Random;
 interface SAInstance {
     float getCost();
 
-    void init(Random rd);
+    boolean init(Random rd);
 
     void genNeighbor(Random rd);
 

@@ -1,6 +1,7 @@
 package vc.algo;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 
 class SA {
@@ -11,7 +12,7 @@ class SA {
 
     public SA() {
         T_init = 1000000;
-        cool_rate = 0.95;
+        cool_rate = 0.97;
         T_limit = 0.0;
     }
 
@@ -30,7 +31,10 @@ class SA {
         Random rd = new Random();
         rd.setSeed(seed);
 
-        instance.init(rd);
+        if(!instance.init(rd)){
+            Logger.getGlobal().info("Initialization Failed!");
+            System.exit(-1);
+        }
 
         float best_cost = instance.getCost();
 

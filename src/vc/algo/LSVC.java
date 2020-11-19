@@ -27,7 +27,7 @@ class LSVC {
             Logger.getGlobal().info("Initialize Vertex Cover Failed!");
             System.exit(-1);
         }else {
-            System.out.println("Initialized Vertex Cover of Size " + getSize());
+            System.out.println("Initialized Vertex Cover of Size " + getSize(true));
         }
 
     }
@@ -69,6 +69,8 @@ class LSVC {
             }
 
         }
+
+        getSize(true);
 
         return checkVC();
     }
@@ -127,11 +129,31 @@ class LSVC {
             }
 
         }
-
+        getSize(true);
         return checkVC();
     }
 
-    private boolean checkVC(){
+    protected boolean initVCGreedy(Random rd){
+        vc = new HashMap<>(graph.getVerticesNum());
+        ArrayList<Long> vertexIds = graph.getVertexIds();
+        for(Long vertexId: vertexIds){
+            vc.put(vertexId, 0);
+        }
+
+        for(Long curVertexId: vertexIds){
+            List<Vertex> followVertices = graph.getVertex(curVertexId).getFollowVertices();
+            for(Vertex followVertex : followVertices){
+                if(curVertexId < followVertex.getId()){
+                    vc.put(curVertexId, 1);
+                    break;
+                }
+            }
+        }
+        getSize(true);
+        return checkVC();
+    }
+
+    public boolean checkVC(){
         long curVertexId;
         long followerVertexId;
         for (Map.Entry<Long, Integer> entry : vc.entrySet()) {
@@ -151,7 +173,14 @@ class LSVC {
         return true;
     }
 
-    public int getSize(){
+    public int getSize(boolean forceRedo){
+        if(forceRedo){
+            size = -1;
+        }
+        return _getSize();
+    }
+
+    private int _getSize(){
         if(size == -1) {
             size = 0;
             for (Map.Entry<Long, Integer> entry : vc.entrySet()) {
