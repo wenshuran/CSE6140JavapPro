@@ -12,7 +12,7 @@ class SA {
 
     public SA() {
         T_init = 1000000;
-        cool_rate = 0.99;
+        cool_rate = 0.97;
         T_limit = 0.0;
     }
 

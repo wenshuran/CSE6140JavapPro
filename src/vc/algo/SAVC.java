@@ -135,6 +135,7 @@ public class SAVC extends LSVC implements SAInstance{
     public void printResult(){
 //        System.out.println("SA algorithms for Minimum Vertex Cover not implemented yet!");
         System.out.println("SA algorithms Results: " + getSize(true));
+        printVC();
     }
 
 

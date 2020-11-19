@@ -193,5 +193,21 @@ class LSVC {
     public HashMap<Long, Integer> getVC(){
         return vc;
     }
+
+    public void printVC(){
+        int cnt = 0;
+        System.out.print("Vertex IDs in VC:");
+        for (Map.Entry<Long, Integer> entry : vc.entrySet()) {
+            if(entry.getValue() == 1) {
+                if (cnt % 20 == 0)
+                    System.out.print("\n" + entry.getKey());
+                else {
+                    System.out.print("\t" + entry.getKey());
+                }
+                cnt += 1;
+            }
+        }
+        System.out.println();
+    }
 }
 
