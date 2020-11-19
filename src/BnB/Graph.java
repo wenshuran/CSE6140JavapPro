@@ -232,10 +232,10 @@ public class Graph {
 
 	/**
 	 * Find v \in C such that v has exactly one neighbor w not \in C
+	 * @author chujiechen
 	 * @return array consisting of v and w;
 	 */
 	public Vertex[] findVW(Graph G) {
-		// TODO Auto-generated method stub
 		for(long i :this.vertices.keySet()) {
 			// the full list of neighbors is from graph G
 			Vertex v = G.getVertex(i);
@@ -258,4 +258,26 @@ public class Graph {
 		}
 		return new Vertex[] {null, null};
 	}
+	/**
+	 * The first line is the number of vertices
+	 * of the graph
+	 * The next line shows a list of vertex ids.
+	 * @author chujiechen
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.getVerticesNum() + "\n");
+		ArrayList<Integer> vs = new ArrayList<>();
+		for(long i: this.vertices.keySet()) {
+			vs.add((int) i);
+		}
+		Collections.sort(vs);
+		for(int v: vs) {
+			sb.append(v +",");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		return sb.toString();
+	}
+	
 }
