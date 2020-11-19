@@ -12,7 +12,7 @@ class SA {
 
     public SA() {
         T_init = 1000000;
-        cool_rate = 0.97;
+        cool_rate = 0.99;
         T_limit = 0.0;
     }
 
@@ -34,6 +34,9 @@ class SA {
         if(!instance.init(rd)){
             Logger.getGlobal().info("Initialization Failed!");
             System.exit(-1);
+        }
+        else{
+            System.out.println("SA Instance initialized cost: " + instance.getCost());
         }
 
         float best_cost = instance.getCost();
@@ -77,6 +80,8 @@ class SA {
             T *= cool_rate;
 
         }
+
+        System.out.printf("elapsed time: %.6f, current cost: %.0f%n", elapsed_t, instance.getCost());
 
     }
 

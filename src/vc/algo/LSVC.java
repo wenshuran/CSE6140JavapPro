@@ -23,11 +23,11 @@ class LSVC {
 
         Random rd = new Random();
 
-        if(!initVC(rd)){
+        if(!initVCGreedy(rd)){
             Logger.getGlobal().info("Initialize Vertex Cover Failed!");
             System.exit(-1);
         }else {
-            System.out.println("Initialized Vertex Cover of Size " + getSize(true));
+            System.out.println("Check for Initialization Passed.");
         }
 
     }
