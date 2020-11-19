@@ -30,6 +30,7 @@ class SA {
 
         Random rd = new Random();
         rd.setSeed(seed);
+        String last_update = new String("");
 
         if(!instance.init(rd)){
             Logger.getGlobal().info("Initialization Failed!");
@@ -69,6 +70,7 @@ class SA {
             // write to trace
             if (cur_cost < best_cost) {
                 best_cost = cur_cost;
+                last_update = "elapsed time: "+elapsed_t+", current cost: "+cur_cost+"\n";
                 if(verbose) {
                     System.out.printf("elapsed time: %.6f, current cost: %.0f%n", elapsed_t, cur_cost);
                 }
@@ -81,7 +83,8 @@ class SA {
 
         }
 
-        System.out.printf("elapsed time: %.6f, current cost: %.0f%n", elapsed_t, instance.getCost());
+        System.out.printf("Exit at time %.6f s%n", elapsed_t);
+        System.out.println("    latest update record: "+last_update);
 
     }
 
