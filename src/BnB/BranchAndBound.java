@@ -2,8 +2,10 @@ package BnB;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BranchAndBound {
     private static HashMap<Graph, Integer> graph2RMap = new HashMap<>();
@@ -12,8 +14,9 @@ public class BranchAndBound {
         while(C.hasRemovableVertex()){
 //        	System.out.println("having removable vertices...");
             int rmax = 0;
-                Vertex vMax = null;
-            for(Vertex v : C.getRemovableVertices()){
+            Vertex vMax = null;
+            List<Vertex> vertices = C.getRemovableVertices().stream().sorted(Comparator.comparing(vertex -> vertex.getFollowVertices().size())).collect(Collectors.toList());
+            for(Vertex v : vertices){
                 int r;
                 if (graph2RMap.containsKey(C.removeVertex(v))){
                     r = graph2RMap.get(C.removeVertex(v));
@@ -28,6 +31,19 @@ public class BranchAndBound {
                 }
             }
             C = C.removeVertex(vMax);
+        }
+//        System.out.println("Proc_A done.");
+        return C;
+    }
+
+    public static Graph Proc_A_tmp(Graph G, Graph C){
+//    	System.out.println("Proc_A running...");
+        while(C.hasRemovableVertex()){
+//        	System.out.println("having removable vertices...");
+            int rmax = 0;
+            Vertex vMax = null;
+            List<Vertex> vertices = C.getRemovableVertices().stream().sorted(Comparator.comparing(vertex -> vertex.getFollowVertices().size())).collect(Collectors.toList());
+            C = C.removeVertex(vertices.get(0));
         }
 //        System.out.println("Proc_A done.");
         return C;
@@ -59,18 +75,30 @@ public class BranchAndBound {
         long end;
         for (long i : G.getDegreeSortedVertices()){
             Graph C = G.removeVertex(G.getVertex(i));
-            C = Proc_A(G, C);
+            C = Proc_A_tmp(G, C);
             for (int r = 1; r <= n-k; r++){
                 C = Proc_B(G, C, r);
                 if(rnt == null){
                     rnt = C;
                     end = System.currentTimeMillis();
-                    System.out.println("After "+(end-start)/1000+" second, count is " + rnt.getVerticesNum());
+                    System.out.println("After "+((double)(end-start))/1000+" second, count is " + rnt.getVerticesNum());
                 }
                 else if(C.getVerticesNum() < rnt.getVerticesNum()){
                     rnt = C;
                     end = System.currentTimeMillis();
-                    System.out.println("After "+(end-start)/1000+" second, count is " + rnt.getVerticesNum());
+                    System.out.println("After "+((double)(end-start))/1000+" second, count is " + rnt.getVerticesNum());
+                }
+            }
+        }
+        for (long i : G.getDegreeSortedVertices()){
+            Graph C = G.removeVertex(G.getVertex(i));
+            C = Proc_A(G, C);
+            for (int r = 1; r <= n-k; r++){
+                C = Proc_B(G, C, r);
+                if(C.getVerticesNum() < rnt.getVerticesNum()){
+                    rnt = C;
+                    end = System.currentTimeMillis();
+                    System.out.println("After "+((double)(end-start))/1000+" second, count is " + rnt.getVerticesNum());
                 }
             }
             CList.add(C);
@@ -108,7 +136,7 @@ public class BranchAndBound {
     public static void main(String[] args) throws FileNotFoundException {
 //        Graph G = Graph.read("src\\BnB\\delaunay_n10.graph");
 //    	Graph G = Graph.read("src/BnB/delaunay_n10.graph");
-    	Graph G = Graph.read("src/BnB/karate.graph");
+    	Graph G = Graph.read("src/BnB/hep-th.graph");
 //    	Graph G = Graph.read("src/BnB/karate.graph");
     	System.out.println("running...");
         int n = G.getVerticesNum();
