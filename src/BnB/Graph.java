@@ -2,6 +2,7 @@ package BnB;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Graph {
     private final HashMap<Long, Vertex> vertices;
@@ -78,6 +79,10 @@ public class Graph {
         graph.vertices.remove(vertex.getId());
         return graph;
     }
+
+    public List<Long> getDegreeSortedVertices(){
+    	return vertices.values().stream().sorted(Comparator.comparing(vertex->vertex.getFollowVertices().size())).mapToLong(Vertex::getId).boxed().collect(Collectors.toList());
+	}
 
 
 	public Vertex getVertex(long id){
@@ -278,6 +283,29 @@ public class Graph {
 		}
 		sb.deleteCharAt(sb.length() - 1);
 		return sb.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Graph tmp = (Graph)obj;
+		if (this.vertices.size() != tmp.vertices.size()){
+			return false;
+		}
+		for (Map.Entry<Long, Vertex> entry : vertices.entrySet()){
+			if (!tmp.vertices.containsKey(entry.getKey())){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		StringBuilder sb = new StringBuilder();
+		for (long c : this.vertices.keySet().stream().sorted().collect(Collectors.toList())){
+			sb.append(c);
+		}
+		return sb.toString().hashCode();
 	}
 	
 }
