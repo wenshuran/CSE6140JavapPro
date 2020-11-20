@@ -65,12 +65,12 @@ public class BranchAndBound {
                 if(rnt == null){
                     rnt = C;
                     end = System.currentTimeMillis();
-                    System.out.println("After "+(end-start)+" second, count is " + rnt.getVerticesNum());
+                    System.out.println("After "+(end-start)/1000+" second, count is " + rnt.getVerticesNum());
                 }
                 else if(C.getVerticesNum() < rnt.getVerticesNum()){
                     rnt = C;
                     end = System.currentTimeMillis();
-                    System.out.println("After "+(end-start)+" second, count is " + rnt.getVerticesNum());
+                    System.out.println("After "+(end-start)/1000+" second, count is " + rnt.getVerticesNum());
                 }
             }
             CList.add(C);
