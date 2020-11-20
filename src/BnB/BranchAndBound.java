@@ -62,11 +62,15 @@ public class BranchAndBound {
             C = Proc_A(G, C);
             for (int r = 1; r <= n-k; r++){
                 C = Proc_B(G, C, r);
-                if(rnt == null) rnt = C;
+                if(rnt == null){
+                    rnt = C;
+                    end = System.currentTimeMillis();
+                    System.out.println("After "+(end-start)+" second, count is " + rnt.getVerticesNum());
+                }
                 else if(C.getVerticesNum() < rnt.getVerticesNum()){
                     rnt = C;
                     end = System.currentTimeMillis();
-                    System.out.println("After "+(end-start)/1000+" second, count is " + rnt.getVerticesNum());
+                    System.out.println("After "+(end-start)+" second, count is " + rnt.getVerticesNum());
                 }
             }
             CList.add(C);
@@ -104,7 +108,7 @@ public class BranchAndBound {
     public static void main(String[] args) throws FileNotFoundException {
 //        Graph G = Graph.read("src\\BnB\\delaunay_n10.graph");
 //    	Graph G = Graph.read("src/BnB/delaunay_n10.graph");
-    	Graph G = Graph.read("src/BnB/email.graph");
+    	Graph G = Graph.read("src/BnB/karate.graph");
 //    	Graph G = Graph.read("src/BnB/karate.graph");
     	System.out.println("running...");
         int n = G.getVerticesNum();
