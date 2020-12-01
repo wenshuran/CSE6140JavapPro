@@ -9,7 +9,8 @@ public class HillClimbing {
 	private static String OutputTracePath;
 	private static PrintWriter Output;
 	private static PrintWriter OutputTrace;
-	private static HashSet<Vertex> visited;
+	private static ArrayList<Long> sortedInitialVertices;
+	private static int index = 0;
 	/**
 	 * @author chujiechen
 	 * @param G: original graph
@@ -22,14 +23,15 @@ public class HillClimbing {
 		long end_time;
 		float run_time = 0;
 		// Initial VC
-		visited = new HashSet<>();
 		Graph current = makeNode(G, randomSeed);
+		sortedInitialVertices = (ArrayList<Long>) current.getDegreeSortedVertices();
 		while(run_time < cutoff) {
+			int currentSize = current.getVerticesNum();
 			Graph next = findSuccessor(current);
 			end_time = System.currentTimeMillis();
 			run_time = (end_time-start_time)/1000F;
 			
-			if(next.getVerticesNum() >= current.getVerticesNum()) {
+			if(next.getVerticesNum() >= currentSize) {
 				return current;
 			}
 			current = next;
@@ -40,13 +42,18 @@ public class HillClimbing {
 
 	private static Graph findSuccessor(Graph current) {
 		// TODO Auto-generated method stub
-		Graph next = current.deepClone();
-		for(long i: next.getDegreeSortedVertices()) {
+		Graph next = current;
+//		for(long i: next.getDegreeSortedVertices()) {
+		while(index < sortedInitialVertices.size()) {
+			long i = sortedInitialVertices.get(index);
 			Vertex u = next.getVertex(i);
 			if(next.isRemovableVertex(u)) {
-				next = next.removeVertex(u);
+				// a deepcopied graph is produced after remove
+				next = next.removeVertex(u, false);
+				index++;
 				break;
 			}
+			index++;
 		}
 		return next;
 	}
@@ -59,16 +66,13 @@ public class HillClimbing {
 		int id = rand.nextInt(n) + 1;
 		Vertex u = g.getVertex(id);
 		if(g.isRemovableVertex(u)) {
-			g.removeVertex(u);
+			g.removeVertex(u, false);
 		}
 		return g;
 	}
 
-
-
-
 	public static void main(String[] args) throws FileNotFoundException {
-    	String filename = "power.graph";
+    	String filename = "star2.graph";
     	int cutoff = 600;
     	int randomSeed = 1;
 		OutputPath = "output/"+filename +"_hillClimbing_"+ cutoff +"_"+ randomSeed+".sol";
@@ -77,7 +81,7 @@ public class HillClimbing {
 		OutputTrace = new PrintWriter(OutputTracePath);
 		
     	System.out.println("running...");
-    	Graph G = Graph.read("src/HC/" + filename);
+    	Graph G = Graph.read("data/" + filename);
     	Graph res = hillClimbing(G, cutoff, randomSeed);
     	
     	System.out.println(res);
