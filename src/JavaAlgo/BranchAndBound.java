@@ -1,4 +1,4 @@
-package BnB;
+package JavaAlgo;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BranchAndBound {
-    private static HashMap<Graph, Integer> graph2RMap = new HashMap<>();
-    public static Graph Proc_A(Graph G, Graph C){
+public class BranchAndBound implements Algo{
+    private HashMap<Graph, Integer> graph2RMap = new HashMap<>();
+    public Graph Proc_A(Graph G, Graph C){
 //    	System.out.println("Proc_A running...");
         while(C.hasRemovableVertex()){
 //        	System.out.println("having removable vertices...");
@@ -36,7 +36,7 @@ public class BranchAndBound {
         return C;
     }
 
-    public static Graph Proc_A_tmp(Graph G, Graph C){
+    public Graph Proc_A_tmp(Graph G, Graph C){
 //    	System.out.println("Proc_A running...");
         while(C.hasRemovableVertex()){
 //        	System.out.println("having removable vertices...");
@@ -49,7 +49,7 @@ public class BranchAndBound {
         return C;
     }
 
-    public static Graph Proc_B(Graph G, Graph C, int n){
+    public Graph Proc_B(Graph G, Graph C, int n){
 //    	System.out.println("Proc_B running...");
         for(int i = 1; i <= n; i++){
 //            Vertex v = C.findVwithOneNeighboroutC();
@@ -66,11 +66,11 @@ public class BranchAndBound {
         return C;
     }
 
-    public static Graph branchAndBound(Graph G, int k){
+    public Graph branchAndBound(Graph G, int k){
         int n = G.getVerticesNum();
         List<Graph> CList = new ArrayList<>(n);
         Graph rnt = null;
-        System.out.println("Part I");
+//        System.out.println("Part I");
         long start = System.currentTimeMillis();
         long end;
         for (long i : G.getDegreeSortedVertices()){
@@ -106,7 +106,7 @@ public class BranchAndBound {
         if (rnt.getVerticesNum() < k){
             return rnt;
         }
-        System.out.println("Part II");
+//        System.out.println("Part II");
         List<Graph> VCs = new ArrayList<>();
         for (int i = 1; i <=n; i++){
             for (int j = i+1; j <= n; j++){
@@ -133,17 +133,15 @@ public class BranchAndBound {
         return rnt;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-//        Graph G = Graph.read("src\\BnB\\delaunay_n10.graph");
-//    	Graph G = Graph.read("src/BnB/delaunay_n10.graph");
-    	Graph G = Graph.read("src/BnB/hep-th.graph");
-//    	Graph G = Graph.read("src/BnB/karate.graph");
-    	System.out.println("running...");
+    @Override
+    public void run(String filename, int time, int seed) throws FileNotFoundException {
+//        Graph G = Graph.read(filename);
+        Graph G = Graph.read("src/JavaAlgo/"+ filename);
+        System.out.println("running...");
         int n = G.getVerticesNum();
         int k = n - (int)Math.ceil((double)n/(G.getDelta()+1));
-        System.out.println("k is: " + k);
         Graph res = branchAndBound(G, k);
-        
+
         System.out.println("A naive printout of the res Graph: ");
         System.out.println(res);
     }

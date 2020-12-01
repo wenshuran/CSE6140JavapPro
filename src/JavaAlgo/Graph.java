@@ -1,4 +1,4 @@
-package BnB;
+package JavaAlgo;
 
 import java.io.*;
 import java.util.*;
