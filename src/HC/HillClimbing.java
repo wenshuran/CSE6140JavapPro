@@ -9,7 +9,7 @@ public class HillClimbing {
 	private static String OutputTracePath;
 	private static PrintWriter Output;
 	private static PrintWriter OutputTrace;
-	private static HashSet<Vertex> visited;
+	private static List<Long> sortedInitialVertices;
 	/**
 	 * @author chujiechen
 	 * @param G: original graph
@@ -22,7 +22,7 @@ public class HillClimbing {
 		long end_time;
 		float run_time = 0;
 		// Initial VC
-		visited = new HashSet<>();
+		sortedInitialVertices = G.getDegreeSortedVertices();
 		Graph current = makeNode(G, randomSeed);
 		while(run_time < cutoff) {
 			Graph next = findSuccessor(current);
@@ -40,11 +40,14 @@ public class HillClimbing {
 
 	private static Graph findSuccessor(Graph current) {
 		// TODO Auto-generated method stub
-		Graph next = current.deepClone();
-		for(long i: next.getDegreeSortedVertices()) {
+		Graph next = current;
+//		for(long i: next.getDegreeSortedVertices()) {
+		for(long i: sortedInitialVertices) {
 			Vertex u = next.getVertex(i);
 			if(next.isRemovableVertex(u)) {
+				// a deepcopied graph is produced after remove
 				next = next.removeVertex(u);
+				sortedInitialVertices.remove(i);
 				break;
 			}
 		}
@@ -64,11 +67,8 @@ public class HillClimbing {
 		return g;
 	}
 
-
-
-
 	public static void main(String[] args) throws FileNotFoundException {
-    	String filename = "power.graph";
+    	String filename = "star2.graph";
     	int cutoff = 600;
     	int randomSeed = 1;
 		OutputPath = "output/"+filename +"_hillClimbing_"+ cutoff +"_"+ randomSeed+".sol";
@@ -77,7 +77,7 @@ public class HillClimbing {
 		OutputTrace = new PrintWriter(OutputTracePath);
 		
     	System.out.println("running...");
-    	Graph G = Graph.read("src/HC/" + filename);
+    	Graph G = Graph.read("data/" + filename);
     	Graph res = hillClimbing(G, cutoff, randomSeed);
     	
     	System.out.println(res);
