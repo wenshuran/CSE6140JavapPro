@@ -19,7 +19,7 @@ public class JavaAlgo {
                     algo = null;
                     break;
                 case "LS2":
-                    algo = null;
+                    algo = new HillClimbing();
                     break;
                 default:
                     System.out.println("ERROR: unimplemented algorithm");

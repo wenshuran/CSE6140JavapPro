@@ -66,11 +66,7 @@ public class Graph {
         }
         return vertices;
     }
-    /**
-     * TODO
-     * followVertex won't get removed
-     * - Chujie
-     */
+    
     public Graph removeVertex(Vertex vertex){
         if (vertex == null){
             return this;
@@ -78,6 +74,20 @@ public class Graph {
         Graph graph = this.deepClone();
         graph.vertices.remove(vertex.getId());
         return graph;
+    }
+    /**
+     * User can choose wether deepcopy the graph or not
+     * @param vertex
+     * @param deepcopy
+     * @return
+     */
+    public Graph removeVertex(Vertex vertex, boolean deepcopy) {
+    	if(deepcopy) return this.removeVertex(vertex);
+    	if (vertex == null){
+            return this;
+        }
+    	this.vertices.remove(vertex.getId());
+    	return this;
     }
 
     public List<Long> getDegreeSortedVertices(){
