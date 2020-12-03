@@ -19,7 +19,7 @@ public class JavaAlgo {
                     algo = new BranchAndBound();
                     break;
                 case "Approx":
-                    algo = null;
+                    algo = new Approx();
                     break;
                 case "LS1":
                     algo = new SAVC();
