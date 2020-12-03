@@ -26,8 +26,8 @@ public class Approx implements Algo{
 			
 			//output trace file
 			
-			String OutputTracePath = "output/"+filename +"Approx" +cutoff+"_"+randSeed+".trace";
-//			String OutputTracePath = "E:\\classes\\CSE6140 Comp Sci&Engr Algorithms\\final_project\\output\\"+filename +"Approx" +cutoff+"_"+randSeed+".trace";
+			String OutputTracePath = "output/"+filename +"_Approx_" +cutoff+"_"+randSeed+".trace";
+//			String OutputTracePath = "E:\\classes\\CSE6140 Comp Sci&Engr Algorithms\\final_project\\output\\"+filename +"_Approx_" +cutoff+"_"+randSeed+".trace";
 			PrintWriter OutputTrace = new PrintWriter(OutputTracePath);
 			
 			// use a copy of graph edges to track if all the vertices be covered
@@ -105,16 +105,16 @@ public class Approx implements Algo{
 		// main function
 		public void run(String filename, int time, int seed) throws FileNotFoundException {
 			 
-			Graph_app G = Graph_app.read("src/JavaAlgo/"+ filename);
-//			Graph_app G = Graph_app.read("E:\\classes\\CSE6140 Comp Sci&Engr Algorithms\\final_project\\DATA\\DATA\\"+ filename + ".graph");
+//			Graph_app G = Graph_app.read("src/JavaAlgo/"+ filename);
+			Graph_app G = Graph_app.read("E:\\classes\\CSE6140 Comp Sci&Engr Algorithms\\final_project\\DATA\\DATA\\"+ filename + ".graph");
 	        G.addEdges();
 //	        String filename = "jazz";
 //	        int cutoff = 600;
 //	        int randSeed = 6140;
 	        
 	        //open the output file
-	        String OutputPath = "output/"+filename +"Approx"+ time +"_"+ seed+".sol";
-//	        String OutputPath = "E:\\classes\\CSE6140 Comp Sci&Engr Algorithms\\final_project\\output\\"+filename +"Approx"+ time +"_"+ seed+".sol";
+	        String OutputPath = "output/"+filename +"_Approx_"+ time +"_"+ seed+".sol";
+//	        String OutputPath = "E:\\classes\\CSE6140 Comp Sci&Engr Algorithms\\final_project\\output\\"+filename +"_Approx_"+ time +"_"+ seed+".sol";
 	       
 	        
 	        Output = new PrintWriter(OutputPath);
