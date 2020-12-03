@@ -6,21 +6,34 @@ import java.util.stream.Collectors;
 
 public class Graph {
     private final HashMap<Long, Vertex> vertices;
+	private final ArrayList<Long> vertexIds;
+
     private int delta; //max edge num from one vertex
 
-    private Graph() {
+	private int numEdges;
+
+    Graph() {
+		vertexIds = new ArrayList<>();
         vertices = new HashMap<>();
         delta = 0;
+		numEdges = 0;
     }
 
+	public int getNumEdges() {
+		return numEdges;
+	}
+
     private Graph(long verticesNum) {
+		vertexIds = new ArrayList<>((int)verticesNum);
         vertices = new HashMap<>((int)verticesNum);
         delta = 0;
+		numEdges = 0;
     }
 
     public boolean addVertex(Vertex vertex){
         if (!vertices.containsKey(vertex.getId())){
             vertices.put(vertex.getId(), vertex);
+			vertexIds.add(vertex.getId());
             return true;
         }
         else {
@@ -35,6 +48,10 @@ public class Graph {
     public int getDelta(){
         return delta;
     }
+
+	public ArrayList<Long> getVertexIds(){
+		return vertexIds;
+	}
 
     public boolean isRemovableVertex(Vertex vertex){
 //        List<Vertex> vertices = vertex.getFollowVertices();
@@ -160,8 +177,9 @@ public class Graph {
                     edgeNum++;
                 }
                 graph.delta = Math.max(graph.delta, edgeNum);
+				graph.numEdges += edgeNum;
             }
-
+			graph.numEdges /= 2;
             return graph;
         } catch (Exception e) {
             System.out.println(e.toString());

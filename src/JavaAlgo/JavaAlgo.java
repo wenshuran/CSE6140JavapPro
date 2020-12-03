@@ -16,7 +16,7 @@ public class JavaAlgo {
                     algo = null;
                     break;
                 case "LS1":
-                    algo = null;
+                    algo = new SAVC();
                     break;
                 case "LS2":
                     algo = new HillClimbing();
