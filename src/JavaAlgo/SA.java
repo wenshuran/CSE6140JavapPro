@@ -1,5 +1,6 @@
 package JavaAlgo;
 
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -23,10 +24,10 @@ class SA {
     }
 
     public void run(SAInstance instance, float cutoff, int seed){
-        this.run(instance, cutoff, seed, false);
+        this.run(instance, cutoff, seed, false, null);
     }
 
-    public void run(SAInstance instance, float cutoff, int seed, boolean verbose){
+    public void run(SAInstance instance, float cutoff, int seed, boolean verbose, PrintWriter OutputTrace){
 
         Random rd = new Random();
         rd.setSeed(seed);
@@ -47,8 +48,8 @@ class SA {
         float elapsed_t = 0;
 
         double T = T_init;
-
-        while (elapsed_t < cutoff && T > T_limit) {
+        int static_loop = 0;
+        while (elapsed_t < cutoff && T > T_limit && static_loop < 1000) {
             instance.genNeighbor(rd);
             double delta_F = instance.getNeighborCost() - instance.getCost();
 
@@ -74,6 +75,13 @@ class SA {
                 if(verbose) {
                     System.out.printf("elapsed time: %.6f, current cost: %.0f%n", elapsed_t, cur_cost);
                 }
+                if(OutputTrace != null){
+                    OutputTrace.printf("%.3f, %d%n", ((double)(elapsed_t)), (int)cur_cost);
+                }
+                static_loop = 0;
+            }
+            else{
+                static_loop += 1;
             }
             if (elapsed_t > cutoff) {
                 break;

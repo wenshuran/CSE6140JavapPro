@@ -128,7 +128,7 @@ public class SAVC extends LSVC implements SAInstance, Algo{
 
     public void run(float cutoff, int seed, boolean verbose) {
         SA algo = new SA();
-        algo.run(this, cutoff, seed, verbose);
+        algo.run(this, cutoff, seed, verbose, OutputTrace);
     }
 
     public void printResult(){
@@ -140,8 +140,8 @@ public class SAVC extends LSVC implements SAInstance, Algo{
 
     @Override
     public void run(String filename, int time, int seed) throws FileNotFoundException {
-        String OutputPath = "output/"+filename +"_hillClimbing_"+ time +"_"+ seed+".sol";
-        String OutputTracePath = "output/"+filename +"_hillClimbing_" +time+"_"+seed+".trace";
+        String OutputPath = "output/"+filename +"_simulatedAnnealing_"+ time +"_"+ seed+".sol";
+        String OutputTracePath = "output/"+filename +"_simulatedAnnealing_" +time+"_"+seed+".trace";
         Output = new PrintWriter(OutputPath);
         OutputTrace = new PrintWriter(OutputTracePath);
 
