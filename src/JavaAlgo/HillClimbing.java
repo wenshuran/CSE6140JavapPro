@@ -1,16 +1,13 @@
-package HC;
+package JavaAlgo;
 
 import java.io.*;
 import java.util.*;
 
-public class HillClimbing {
-	//Define Output Path
-	private static String OutputPath;
-	private static String OutputTracePath;
-	private static PrintWriter Output;
-	private static PrintWriter OutputTrace;
-	private static ArrayList<Long> sortedInitialVertices;
-	private static int index = 0;
+public class HillClimbing implements Algo{
+	private PrintWriter Output;
+	private PrintWriter OutputTrace;
+	private ArrayList<Long> sortedInitialVertices;
+	private int index = 0;
 	/**
 	 * @author chujiechen
 	 * @param G: original graph
@@ -18,7 +15,7 @@ public class HillClimbing {
 	 * @param randomSeed: a seed
 	 * @return result vertex cover
 	 */
-	public static Graph hillClimbing(Graph G, int cutoff, int randomSeed){
+	public Graph hillClimbing(Graph G, int cutoff, int randomSeed){
 		long start_time = System.currentTimeMillis();
 		long end_time;
 		float run_time = 0;
@@ -40,7 +37,7 @@ public class HillClimbing {
 		return current;
 	}
 
-	private static Graph findSuccessor(Graph current) {
+	private Graph findSuccessor(Graph current) {
 		// TODO Auto-generated method stub
 		Graph next = current;
 //		for(long i: next.getDegreeSortedVertices()) {
@@ -58,7 +55,7 @@ public class HillClimbing {
 		return next;
 	}
 
-	private static Graph makeNode(Graph g, int randomSeed) {
+	private Graph makeNode(Graph g, int randomSeed) {
 		// TODO Auto-generated method stub
 		int n = g.getVerticesNum();
 		Random rand = new Random();
@@ -71,23 +68,21 @@ public class HillClimbing {
 		return g;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-    	String filename = "star2.graph";
-    	int cutoff = 600;
-    	int randomSeed = 1;
-		OutputPath = "output/"+filename +"_hillClimbing_"+ cutoff +"_"+ randomSeed+".sol";
-		OutputTracePath = "output/"+filename +"_hillClimbing_" +cutoff+"_"+randomSeed+".trace";
+	@Override
+	public void run(String filename, int time, int seed) throws FileNotFoundException {
+		String OutputPath = "output/"+filename +"_hillClimbing_"+ time +"_"+ seed+".sol";
+		String OutputTracePath = "output/"+filename +"_hillClimbing_" +time+"_"+seed+".trace";
 		Output = new PrintWriter(OutputPath);
 		OutputTrace = new PrintWriter(OutputTracePath);
-		
-    	System.out.println("running...");
-    	Graph G = Graph.read("data/" + filename);
-    	Graph res = hillClimbing(G, cutoff, randomSeed);
-    	
-    	System.out.println(res);
-    	Output.printf(res.toString());
-    	System.out.println("Done");
-    	Output.close();
-    	OutputTrace.close();
-    }
+
+		System.out.println("running...");
+		Graph G = Graph.read("src/JavaAlgo/" + filename);
+		Graph res = hillClimbing(G, time, seed);
+
+		System.out.println(res);
+		Output.printf(res.toString());
+		System.out.println("Done");
+		Output.close();
+		OutputTrace.close();
+	}
 }
