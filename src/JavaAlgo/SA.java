@@ -49,6 +49,7 @@ class SA {
 
         double T = T_init;
         int static_loop = 0;
+        boolean first_loop = true;
         while (elapsed_t < cutoff && T > T_limit && static_loop < 1000) {
             instance.genNeighbor(rd);
             double delta_F = instance.getNeighborCost() - instance.getCost();
@@ -69,7 +70,7 @@ class SA {
 
             float cur_cost = instance.getCost();
             // write to trace
-            if (cur_cost < best_cost) {
+            if (cur_cost < best_cost || first_loop) {
                 best_cost = cur_cost;
                 last_update = "elapsed time: "+elapsed_t+", current cost: "+cur_cost+"\n";
                 if(verbose) {
@@ -79,6 +80,7 @@ class SA {
                     OutputTrace.printf("%.3f, %d%n", ((double)(elapsed_t)), (int)cur_cost);
                 }
                 static_loop = 0;
+                first_loop = false;
             }
             else{
                 static_loop += 1;
@@ -88,6 +90,8 @@ class SA {
             }
 
             T *= cool_rate;
+
+
 
         }
 
