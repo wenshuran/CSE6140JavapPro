@@ -1,6 +1,7 @@
 package JavaAlgo;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -72,6 +73,9 @@ public class BranchAndBound implements Algo{
                 C.addVertex(w);
                 C = Proc_A(G, C.removeVertex(v), start, time);
             }
+            if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
+                return C;
+            }
         }
         return C;
     }
@@ -86,29 +90,44 @@ public class BranchAndBound implements Algo{
         for (long i : G.getDegreeSortedVertices()){
             Graph C = G.removeVertex(G.getVertex(i));
             C = Proc_A_tmp(G, C, start, time);
+            if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
+                return C;
+            }
             for (int r = 1; r <= n-k; r++){
                 C = Proc_B(G, C, r, start, time);
                 if(rnt == null){
                     rnt = C;
                     end = System.currentTimeMillis();
                     OutputTrace.printf("%.3f, %d%n", ((double)(end-start))/1000, rnt.getVerticesNum());
+                    Output.printf(rnt.toString());
                 }
                 else if(C.getVerticesNum() < rnt.getVerticesNum()){
                     rnt = C;
                     end = System.currentTimeMillis();
                     OutputTrace.printf("%.3f, %d%n", ((double)(end-start))/1000, rnt.getVerticesNum());
+                    Output.printf(rnt.toString());
+                }
+                if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
+                    return C;
                 }
             }
         }
         for (long i : G.getDegreeSortedVertices()){
             Graph C = G.removeVertex(G.getVertex(i));
             C = Proc_A(G, C, start, time);
+            if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
+                return C;
+            }
             for (int r = 1; r <= n-k; r++){
                 C = Proc_B(G, C, r, start, time);
                 if(C.getVerticesNum() < rnt.getVerticesNum()){
                     rnt = C;
                     end = System.currentTimeMillis();
                     OutputTrace.printf("%.3f, %d%n", ((double)(end-start))/1000, rnt.getVerticesNum());
+                    Output.printf(rnt.toString());
+                }
+                if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
+                    return C;
                 }
             }
             CList.add(C);
@@ -148,7 +167,7 @@ public class BranchAndBound implements Algo{
 //        Graph G = Graph.read(filename);
         String OutputPath = "output/"+filename +"_BnB_"+ time +"_"+ seed+".sol";
         String OutputTracePath = "output/"+filename +"_BnB_" +time+"_"+seed+".trace";
-        Output = new PrintWriter(OutputPath);
+        Output = new PrintWriter(new FileOutputStream(OutputPath), true);
         OutputTrace = new PrintWriter(OutputTracePath);
 
         Graph G = Graph.read("src/JavaAlgo/"+ filename);
@@ -159,7 +178,7 @@ public class BranchAndBound implements Algo{
 
         System.out.println("A naive printout of the res Graph: ");
         System.out.println(res);
-        Output.printf(res.toString());
+//        Output.printf(res.toString());
         Output.close();
         OutputTrace.close();
     }

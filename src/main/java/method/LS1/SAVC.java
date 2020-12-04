@@ -13,7 +13,9 @@ public class SAVC extends LSVC implements SAInstance, Algo{
     private float A;
     private float B;
     private HashMap<Long, Integer> neighbor = null;
+    private HashMap<Long, Integer> bestVC = null;
     private int neighborSize = -1;
+    private int bestSize = -1;
     long flippedVertexId = -1;
     float flippingFactor = 1.0f;
     boolean useProCost;
@@ -53,7 +55,10 @@ public class SAVC extends LSVC implements SAInstance, Algo{
     public boolean init(Random rd) {
 //        return  initVC(rd);
 //        return  initVCFast(rd);
-        return initVCGreedy(rd);
+        boolean flag = initVCGreedy(rd);
+        bestSize = size;
+        bestVC = new HashMap<>(vc);
+        return flag;
     }
 
 
@@ -108,6 +113,10 @@ public class SAVC extends LSVC implements SAInstance, Algo{
     public void update() {
         vc.putAll(neighbor);
         size = neighborSize;
+        if(bestSize == -1 || bestSize > size){
+            bestSize = size;
+            bestVC.putAll(vc);
+        }
     }
 
     public float cost(boolean isNeighbor) {
@@ -163,7 +172,7 @@ public class SAVC extends LSVC implements SAInstance, Algo{
 
         Graph res = null;
 
-        for(Map.Entry<Long, Integer> entry: vc.entrySet()){
+        for(Map.Entry<Long, Integer> entry: bestVC.entrySet()){
             if(entry.getValue() == 1){
                 if(res==null){
                     res = new Graph();

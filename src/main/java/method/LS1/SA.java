@@ -46,11 +46,12 @@ class SA {
         long start_t = System.currentTimeMillis();
         long elapsed_t_milis = 0;
         float elapsed_t = 0;
+        float static_t = 0;
 
         double T = T_init;
         int static_loop = 0;
         boolean first_loop = true;
-        while (elapsed_t < cutoff && T > T_limit && static_loop < 1000) {
+        while (elapsed_t < cutoff && T > T_limit && static_t < 5.0) {
             instance.genNeighbor(rd);
             double delta_F = instance.getNeighborCost() - instance.getCost();
 
@@ -66,6 +67,7 @@ class SA {
             }
 
             elapsed_t_milis = System.currentTimeMillis() - start_t;
+            static_t += (float) elapsed_t_milis / 1000 - elapsed_t;
             elapsed_t = (float) elapsed_t_milis / 1000;
 
             float cur_cost = instance.getCost();
@@ -79,13 +81,11 @@ class SA {
                 if(OutputTrace != null){
                     OutputTrace.printf("%.3f, %d%n", ((double)(elapsed_t)), (int)cur_cost);
                 }
-                static_loop = 0;
+                static_t = 0;
                 first_loop = false;
             }
-            else{
-                static_loop += 1;
-            }
             if (elapsed_t > cutoff) {
+                System.out.printf("elapsed time: %.6f, current cost: %.0f%n", elapsed_t, cur_cost);
                 break;
             }
 
