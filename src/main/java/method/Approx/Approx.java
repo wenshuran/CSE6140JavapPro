@@ -13,7 +13,7 @@ public class Approx implements Algo{
 	
 		
 	// generate initial solution with greedy
-		public static List<Long> aproxSol(String filename, Graph_app graph, int cutoff, int randSeed) throws FileNotFoundException {
+		public static List<Long> aproxSol(String filename, String ot, Graph_app graph, int cutoff, int randSeed) throws FileNotFoundException {
 			
 			//record initialization time
 			long start_time=System.currentTimeMillis();
@@ -27,8 +27,8 @@ public class Approx implements Algo{
 			List<Long> solutionList = new ArrayList<>();
 			
 			//output trace file
-			
-			String OutputTracePath = "output/"+filename +"_Approx_" +cutoff+"_"+randSeed+".trace";
+			String OutputTracePath = ot;
+//			String OutputTracePath = "output/"+filename +"_Approx_" +cutoff+"_"+randSeed+".trace";
 //			String OutputTracePath = "E:\\classes\\CSE6140 Comp Sci&Engr Algorithms\\final_project\\output\\"+filename +"_Approx_" +cutoff+"_"+randSeed+".trace";
 			PrintWriter OutputTrace = new PrintWriter(OutputTracePath);
 			
@@ -106,7 +106,7 @@ public class Approx implements Algo{
 		
 		// main function
 		public void run(String filename, String OutputPath, String OutputTrace, int time, int seed) throws FileNotFoundException {
-			// the below line added by Chujie, contact him if issue encountered
+			
 			Graph_app G = Graph_app.read(filename);
 			
 //			Graph_app G = Graph_app.read("src/JavaAlgo/"+ filename);
@@ -131,7 +131,7 @@ public class Approx implements Algo{
 	        System.out.println("Original vertex size: " + size_VC);
 	        
 	        
-	        List<Long> solution = aproxSol(filename, G, time, seed);
+	        List<Long> solution = aproxSol(filename, OutputTrace, G, time, seed);
 	        // print solution and output solution file:
 	        Output.println(solution.size());
 	        for(int i = 0; i < solution.size(); i++) {
