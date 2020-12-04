@@ -1,7 +1,9 @@
-package JavaAlgo;
+package main.java.method.LS2;
 
 import java.io.*;
 import java.util.*;
+
+import main.java.Algo;
 
 public class HillClimbing implements Algo{
 	private PrintWriter Output;
@@ -69,14 +71,15 @@ public class HillClimbing implements Algo{
 	}
 
 	@Override
-	public void run(String filename, int time, int seed) throws FileNotFoundException {
-		String OutputPath = "output/"+filename +"_hillClimbing_"+ time +"_"+ seed+".sol";
-		String OutputTracePath = "output/"+filename +"_hillClimbing_" +time+"_"+seed+".trace";
+	public void run(String filename, String OutputPath, String OutputTracePath, int time, int seed) throws FileNotFoundException {
+//		String OutputPath = "output/"+filename +"_hillClimbing_"+ time +"_"+ seed+".sol";
+//		String OutputTracePath = "output/"+filename +"_hillClimbing_" +time+"_"+seed+".trace";
 		Output = new PrintWriter(OutputPath);
 		OutputTrace = new PrintWriter(OutputTracePath);
 
-		System.out.println("running on..." + System.getProperty("user.dir"));
-		Graph G = Graph.read("JavaAlgo/" + filename);
+		System.out.println("LS2 running on..." + System.getProperty("user.dir"));
+		Graph G = Graph.read(filename);
+//		Graph G = Graph.read("JavaAlgo/" + filename);
 		Graph res = hillClimbing(G, time, seed);
 
 		System.out.println(res);
