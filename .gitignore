@@ -3,7 +3,7 @@
 /.idea
 /bin/
 .project
-/src/output
+# /src/output
 
 
 # Compiled class file
