@@ -1,16 +1,18 @@
 # Minimum Vertex Cover
 Java implementation of Gatech CSE6140 group project.
 
-##Compile
+## Compile
 At the root directory run:
 ```
 javac $(find . -name "*.java")
 ```
 
 ## Run MVC
-Change directory to `/src`, then run `java main.java.JavaAlgo -inst <filename> -alg [BnB|Approx|LS1|LS2] -time <cutoff in seconds> -seed <random seed>`. Note that  with BnB, you have to provide a `-seed <random seed>` even though the seed will not be used at all.
+Change directory to `/src`, then run `java main.java.JavaAlgo -inst <filename> -alg [BnB|Approx|LS1|LS2] -time <cutoff in seconds> -seed <random seed>`. 
 
-Example shows below:
+Note that  with BnB, you still have to provide a `-seed <random seed>` even though the seed will not be used at all.
+
+An example shows below:
 
 ```bash
 cd src    # now at /path/to/project/src/
