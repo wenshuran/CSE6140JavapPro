@@ -1,8 +1,8 @@
 # Minimum Vertex Cover
-Java implementation of Gatech CSE6140 group project.
+Java implementation of Gatech CSE6140 group project. All four algorithms are tested on Mac / Linux.
 
 ## Compile
-At the root directory run:
+At the project root directory run:
 ```
 javac $(find . -name "*.java")
 ```
