@@ -170,7 +170,7 @@ public class BranchAndBound implements Algo{
         Output = new PrintWriter(new FileOutputStream(OutputPath), true);
         OutputTrace = new PrintWriter(OutputTracePath);
 
-        Graph G = Graph.read("src/JavaAlgo/"+ filename);
+        Graph G = Graph.read("JavaAlgo/"+ filename);
         System.out.println("running...");
         int n = G.getVerticesNum();
         int k = n - (int)Math.ceil((double)n/(G.getDelta()+1));
