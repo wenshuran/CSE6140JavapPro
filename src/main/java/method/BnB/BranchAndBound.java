@@ -1,6 +1,7 @@
 package main.java.method.BnB;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,7 +39,7 @@ public class BranchAndBound implements Algo{
             }
             C = C.removeVertex(vMax);
             if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
-                return C;
+                return null;
             }
         }
 //        System.out.println("Proc_A done.");
@@ -54,7 +55,7 @@ public class BranchAndBound implements Algo{
             List<Vertex> vertices = C.getRemovableVertices().stream().sorted(Comparator.comparing(vertex -> vertex.getFollowVertices().size())).collect(Collectors.toList());
             C = C.removeVertex(vertices.get(0));
             if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
-                return C;
+                return null;
             }
         }
 //        System.out.println("Proc_A done.");
@@ -88,8 +89,14 @@ public class BranchAndBound implements Algo{
         for (long i : G.getDegreeSortedVertices()){
             Graph C = G.removeVertex(G.getVertex(i));
             C = Proc_A_tmp(G, C, start, time);
+            if (C == null){
+                return rnt;
+            }
             for (int r = 1; r <= n-k; r++){
-                C = Proc_B(G, C, r, start, time);
+                C = Proc_B(G, C, n-k, start, time);
+                if (C == null){
+                    return rnt;
+                }
                 if(rnt == null){
                     rnt = C;
                     end = System.currentTimeMillis();
@@ -150,7 +157,7 @@ public class BranchAndBound implements Algo{
         Graph G = Graph.read(filename);
 //        String OutputPath = "output/"+filename +"_BnB_"+ time +"_"+ seed+".sol";
 //        String OutputTracePath = "output/"+filename +"_BnB_" +time+"_"+seed+".trace";
-        Output = new PrintWriter(OutputPath);
+        Output = new PrintWriter(new FileOutputStream(OutputPath, false), true);
         OutputTrace = new PrintWriter(OutputTracePath);
 
 //        Graph G = Graph.read("src/JavaAlgo/"+ filename);
@@ -164,5 +171,5 @@ public class BranchAndBound implements Algo{
         Output.printf(res.toString());
         Output.close();
         OutputTrace.close();
-    }
+}
 }
