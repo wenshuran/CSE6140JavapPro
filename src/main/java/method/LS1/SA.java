@@ -51,7 +51,7 @@ class SA {
         double T = T_init;
         int static_loop = 0;
         boolean first_loop = true;
-        while (elapsed_t < cutoff && T > T_limit && static_t < 5.0) {
+        while (elapsed_t < cutoff && T > T_limit && static_t < 60.0) {
             instance.genNeighbor(rd);
             double delta_F = instance.getNeighborCost() - instance.getCost();
 

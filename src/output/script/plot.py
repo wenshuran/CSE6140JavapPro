@@ -137,7 +137,7 @@ for algo in ALGOS:
             fig, ax = plt.subplots()  # Create a figure and an axes.
             for i in range(ys.shape[0]):
                 ax.plot(x, ys[i, :], label=f'T={TIME_CKPT[i]} ms')  # Plot some data on the axes.
-            ax.set_xlabel('relative solution quality / %')  # Add an x-label to the axes.
+            ax.set_xlabel('relative solution quality')  # Add an x-label to the axes.
             ax.set_ylabel('P(solve)')  # Add a y-label to the axes.
             ax.set_title(f"Solution quality distribution for {algo} on {graph}")  # Add a title to the axes.
             ax.legend()  # Add a legend.
@@ -162,8 +162,8 @@ def drawErrComp(error):
     fig, ax = plt.subplots()  # Create a figure and an axes.
     for algo in ALGOS:
         ax.barh(x, np.flip(error[algo]), label=f'{algo}')  # Plot some data on the axes.
-    ax.set_xlabel('Graphs')  # Add an x-label to the axes.
-    ax.set_ylabel('Relative solution quality / %')  # Add a y-label to the axes.
+    ax.set_xlabel('Relative solution quality')  # Add an x-label to the axes.
+    ax.set_ylabel('Graphs')  # Add a y-label to the axes.
     ax.set_title(f"Relative Solution Quality Comparison")  # Add a title to the axes.
     ax.legend()  # Add a legend.
     plt.tight_layout()
