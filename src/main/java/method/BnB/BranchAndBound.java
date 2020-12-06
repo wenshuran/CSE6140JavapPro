@@ -39,7 +39,7 @@ public class BranchAndBound implements Algo{
             }
             C = C.removeVertex(vMax);
             if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
-                return null;
+                return C;
             }
         }
 //        System.out.println("Proc_A done.");
@@ -55,7 +55,7 @@ public class BranchAndBound implements Algo{
             List<Vertex> vertices = C.getRemovableVertices().stream().sorted(Comparator.comparing(vertex -> vertex.getFollowVertices().size())).collect(Collectors.toList());
             C = C.removeVertex(vertices.get(0));
             if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
-                return null;
+                return C;
             }
         }
 //        System.out.println("Proc_A done.");
@@ -89,13 +89,13 @@ public class BranchAndBound implements Algo{
         for (long i : G.getDegreeSortedVertices()){
             Graph C = G.removeVertex(G.getVertex(i));
             C = Proc_A_tmp(G, C, start, time);
-            if (C == null){
-                return rnt;
+            if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
+                return C;
             }
             for (int r = 1; r <= n-k; r++){
                 C = Proc_B(G, C, r, start, time);
-                if (C == null){
-                    return rnt;
+                if ((System.currentTimeMillis()-start)/1000 > time){ //cutoff
+                    return C;
                 }
                 if(rnt == null){
                     rnt = C;

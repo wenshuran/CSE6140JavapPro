@@ -18,7 +18,14 @@ public class JavaAlgo {
             String filename = args[1];
             String algoName = args[3];
             int time = Integer.parseInt(args[5]);
-            int seed = Integer.parseInt(args[7]);
+            int seed;
+            if (args.length < 8){
+                System.out.println("Running without seed");
+                seed = 0;
+            }
+            else{
+                seed = Integer.parseInt(args[7]);
+            }
             Algo algo = null;
             
             String graphPrefix = filename.substring(0, filename.length() - 6);
