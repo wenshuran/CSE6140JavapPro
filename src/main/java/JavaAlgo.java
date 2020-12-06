@@ -22,7 +22,7 @@ public class JavaAlgo {
             Algo algo = null;
             
             String graphPrefix = filename.substring(0, filename.length() - 6);
-            String inFileName = "src/data/" + filename;
+            String inFileName = "./data/" + filename;
             String outSol = "./output/";
             String outTrace = "./output/";
             

@@ -93,7 +93,7 @@ public class BranchAndBound implements Algo{
                 return rnt;
             }
             for (int r = 1; r <= n-k; r++){
-                C = Proc_B(G, C, n-k, start, time);
+                C = Proc_B(G, C, r, start, time);
                 if (C == null){
                     return rnt;
                 }
